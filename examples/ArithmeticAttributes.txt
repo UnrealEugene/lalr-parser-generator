@@ -1,0 +1,8 @@
+E0 [long val] -> E {val = $0.val;};
+
+E [long val]  -> E '+' T {val = $0.val + $2.val;} | E '-' T {val = $0.val - $2.val;} | T {val = $0.val;};
+T [long val]  -> T '*' F {val = $0.val * $2.val;} | T '/' F {val = $0.val / $2.val;} | F {val = $0.val;};
+F [long val]  -> P '**' F {val = (long) Math.pow($0.val, $2.val);} | P {val = $0.val;};
+P [long val]  -> r'[+-]?([1-9][0-9]*|0)' {val = Long.parseLong($0);} | '(' E ')' {val = $1.val;};
+
+@skip r'[ \n\r\t]+';
